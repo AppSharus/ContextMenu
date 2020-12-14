@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContextMenu"
         mc:Ignorable="d"
-        Title="MainWindow" Height="412.226" Width="637.365" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="412.226" Width="637.365" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <SolidColorBrush x:Key="ProgammColor" Color="#FF13427C"/>
 
@@ -31,46 +31,78 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" Grid.ColumnSpan="2" Height="35" VerticalAlignment="Top">
-            <Button Width="25" Height="25" Margin="2">
+            <Button x:Name="addToolbarButton" Width="25" Height="25" Margin="2" Click="addToolbarButton_Click">
                 <Image Source="Resources/add.png" Height="20" Width="20"/>
             </Button>
-            <Button Width="30">
+            <Button x:Name="delToolbarButton" Width="30" Click="delToolbarButton_Click">
                 <Image Source="Resources/delete.png" Height="20" Width="20"/>
             </Button>
         </ToolBar>
         <Border Grid.Row="1" Grid.Column="0" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" CornerRadius="5" Margin="10">
             <Grid>
-                <ComboBox Margin="5" Height="25" VerticalAlignment="Top" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" Background="#FFF0C3C3"/>
-                <ListBox x:Name="listBox" Margin="-2,35,-2,-2" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
+                <ComboBox x:Name="typeContextComboBox" Margin="5" Height="25" VerticalAlignment="Top" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" Background="#FFF0C3C3"/>
+                <ListBox x:Name="menuListBox" Margin="-2,35,-2,-2" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </ListBox.Resources>
+                    <ListViewItem>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="175"/>
+                                <ColumnDefinition Width="60"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"/>
+                                <RowDefinition Height="18"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="iconListBox" Source="Resources/commonIcon.png" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="30" Height="30"/>
+                            <TextBlock x:Name="nameMenuListBox" Text="Название пункта меню" Grid.Column="1" Grid.Row="0" Foreground="{StaticResource ProgammColor}" FontWeight="Bold" TextDecorations="Underline" />
+                            <TextBlock x:Name="pathMenuListBox" Text="Путь до программы" Grid.ColumnSpan="3"  Grid.Row="1" Margin="40,0,0,0" Foreground="#FF91929E"/>
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+                                <TextBlock x:Name="positionMenuListBox" Text="верх"  FontSize="10" Margin="5,0,5,0" Foreground="#FF62636A"/>
+                                <TextBlock x:Name="displayMenuListBox" Text="shift" FontSize="10" Margin="5,0,0,0" Foreground="#FF62636A"/>
+                            </StackPanel>
+                        </Grid>
+                    </ListViewItem>
                 </ListBox>
             </Grid>
         </Border>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <Grid Margin="10">
+            <Grid Margin="10,10,5,10">
                 <Border Height="60" Width="60" HorizontalAlignment="Left" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" CornerRadius="5">
-                    <Image Source="Resources/commonIcom.png" Margin="5"/>
+                    <Image x:Name="iconImage" Source="Resources/commonIcon.png" Margin="5"/>
                 </Border>
-                <TextBlock Text="Название пункта меню" Margin="65,5,5,5" FontSize="16" FontWeight="Bold"/>
-                <TextBox Margin="65,30,5,5" Height="25"/>
+                <TextBlock Text="Название пункта меню" Foreground="{StaticResource ProgammColor}" Margin="65,5,5,5" FontSize="16" FontWeight="Bold"/>
+                <TextBox x:Name="nameMenutextBox" Margin="65,30,5,5" Height="25" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
             </Grid>
-            <TextBlock Text="Позиция меню" Margin="10,0,10,0" FontSize="14" FontWeight="Bold"/>
-            <ComboBox Margin="10,5,10,0">
+            <TextBlock Text="Позиция меню" Foreground="{StaticResource ProgammColor}" Margin="10,0,10,0" FontSize="14" FontWeight="Bold"/>
+            <ComboBox x:Name="positionMenuComboBox" Margin="10,5,10,0">
                 <TextBlock Text="Вверху"/>
                 <TextBlock Text="В центре"/>
                 <TextBlock Text="Внизу"/>
             </ComboBox>
-            <TextBlock Text="Отображение" TextWrapping="Wrap" Margin="10,10,10,0" FontSize="14" FontWeight="Bold"/>
-            <CheckBox Content="Отображение" Margin="10,5,10,0"/>
+            <TextBlock Text="Отображение" Foreground="{StaticResource ProgammColor}" TextWrapping="Wrap" Margin="10,10,10,0" FontSize="14" FontWeight="Bold"/>
+            <CheckBox x:Name="displayCheckBox" Content="Отображение" Margin="10,5,10,0" Foreground="{StaticResource ProgammColor}"/>
             <TextBlock Text="Если выбрать 'Отображение', данный пункт отображается только с нажатой клавишей SHIFT" TextWrapping="Wrap" Margin="10,5,10,0" Background="#FFEAEAEA" Foreground="#FF7C7A7A"/>
-            <TextBlock Text="Путь к файлу" Margin="10,10,10,0" FontSize="14" FontWeight="Bold"/>
+            <TextBlock Text="Путь к файлу" Foreground="{StaticResource ProgammColor}" Margin="10,10,10,0" FontSize="14" FontWeight="Bold"/>
             <Grid Margin="10,5,10,0">
-                <TextBox Height="25" Padding="3,0,32,0" FontSize="14"/>
-                <Button Height="20" Width="20" Content="..." Padding="-10" HorizontalAlignment="Right" Margin="0,0,3,0" FontSize="14">
+                <TextBox x:Name="pathMenuTextBox" Height="25" Padding="3,0,32,0" FontSize="14" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+                <Button x:Name="getPathMenuButton" Height="20" Width="20" Content="..." Padding="-10" HorizontalAlignment="Right" Margin="0,0,3,0" FontSize="14">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="15"/>
@@ -79,11 +111,11 @@
                 </Button>
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
-                <Button Margin="0,0,30,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
+            <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+                <Button x:Name="addMenuButton" Margin="0,0,20,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
                     <TextBlock Text="Добавить"/>
                 </Button>
-                <Button Margin="30,0,0,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
+                <Button x:Name="clearMenuDataButton" Margin="20,0,0,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
                     <TextBlock Text="Очистить"/>
                 </Button>
             </StackPanel>

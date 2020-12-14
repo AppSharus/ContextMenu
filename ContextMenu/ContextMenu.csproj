@@ -96,7 +96,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\commonIcom.png" />
+    <Resource Include="Resources\commonIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\add.png" />

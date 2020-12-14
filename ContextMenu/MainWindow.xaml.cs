@@ -24,5 +24,17 @@ namespace ContextMenu
         {
             InitializeComponent();
         }
+
+        // При нажатии на кнопку добавить контекстное меню
+        private void addToolbarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        // При нажатии на кнопку удалить контекстное меню
+        private void delToolbarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
