@@ -38,6 +38,7 @@
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -64,6 +65,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HelperClass\RegistryData.cs" />
+    <Compile Include="HelperClass\WRegistry.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -103,6 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\bottom.png" />
+    <Resource Include="Resources\center.png" />
+    <Resource Include="Resources\noShift.png" />
+    <Resource Include="Resources\shift.png" />
+    <Resource Include="Resources\top.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

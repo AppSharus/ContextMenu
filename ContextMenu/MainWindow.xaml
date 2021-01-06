@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContextMenu"
         mc:Ignorable="d"
-        Title="MainWindow" Height="412.226" Width="637.365" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        x:Name="mainWindow"
+        Title="MainWindow" Height="412.226" Width="637.365" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="mainWindow_Loaded">
     <Window.Resources>
         <SolidColorBrush x:Key="ProgammColor" Color="#FF13427C"/>
 
@@ -40,33 +41,43 @@
         </ToolBar>
         <Border Grid.Row="1" Grid.Column="0" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" CornerRadius="5" Margin="10">
             <Grid>
-                <ComboBox x:Name="typeContextComboBox" Margin="5" Height="25" VerticalAlignment="Top" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" Background="#FFF0C3C3"/>
-                <ListBox x:Name="menuListBox" Margin="-2,35,-2,-2" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
+                <ComboBox x:Name="typeContextComboBox" Margin="5" Height="25" VerticalAlignment="Top" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" Background="#FFF0C3C3">
+                    <TextBlock Text="Контекстное меню файлов"/>
+                    <TextBlock Text="Контекстное меню папок"/>
+                    <TextBlock Text="Контекстное меню запоминающих устройств"/>
+                    <TextBlock Text="Контекстное меню значка 'Компьютер'"/>
+                    <TextBlock Text="Контекстное меню Рабочего стола"/>
+                    <TextBlock Text="Контекстное меню значка 'Корзина'"/>
+                </ComboBox>
+                <ListBox x:Name="menuListBox" ItemsSource="{Binding contextMenuCollection}" Margin="-2,35,-2,-2" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </ListBox.Resources>
-                    <ListViewItem>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="32"/>
-                                <ColumnDefinition Width="175"/>
-                                <ColumnDefinition Width="60"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="18"/>
-                                <RowDefinition Height="18"/>
-                            </Grid.RowDefinitions>
-                            <Image x:Name="iconListBox" Source="Resources/commonIcon.png" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="30" Height="30"/>
-                            <TextBlock x:Name="nameMenuListBox" Text="Название пункта меню" Grid.Column="1" Grid.Row="0" Foreground="{StaticResource ProgammColor}" FontWeight="Bold" TextDecorations="Underline" />
-                            <TextBlock x:Name="pathMenuListBox" Text="Путь до программы" Grid.ColumnSpan="3"  Grid.Row="1" Margin="40,0,0,0" Foreground="#FF91929E"/>
-                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
-                                <TextBlock x:Name="positionMenuListBox" Text="верх"  FontSize="10" Margin="5,0,5,0" Foreground="#FF62636A"/>
-                                <TextBlock x:Name="displayMenuListBox" Text="shift" FontSize="10" Margin="5,0,0,0" Foreground="#FF62636A"/>
-                            </StackPanel>
-                        </Grid>
-                    </ListViewItem>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="32"/>
+                                    <ColumnDefinition Width="175"/>
+                                    <ColumnDefinition Width="60"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="18"/>
+                                </Grid.RowDefinitions>
+                                <Image x:Name="iconListBox" Source="{Binding icon}" Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Left" Width="30" Height="30"/>
+                                <TextBlock x:Name="nameMenuListBox" Text="{Binding name}" Grid.Column="1" Grid.Row="0" Foreground="{StaticResource ProgammColor}" FontWeight="Bold" TextDecorations="Underline" />
+                                <TextBlock x:Name="pathMenuListBox" Text="{Binding pathToPrograms}" Grid.ColumnSpan="3"  Grid.Row="1" Margin="40,0,0,0" Foreground="#FF91929E"/>
+                                <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+                                    <Image x:Name="positionMenuListBoxImage" Source="{Binding position}"  Margin="5,0,5,0"/>
+                                    <Image x:Name="displayMenuListBoxImage" Source="{Binding dispaly}" Margin="5,0,0,0"/>
+                                </StackPanel>
+                                
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
         </Border>
@@ -76,7 +87,7 @@
                     <Image x:Name="iconImage" Source="Resources/commonIcon.png" Margin="5"/>
                 </Border>
                 <TextBlock Text="Название пункта меню" Foreground="{StaticResource ProgammColor}" Margin="65,5,5,5" FontSize="16" FontWeight="Bold"/>
-                <TextBox x:Name="nameMenutextBox" Margin="65,30,5,5" Height="25" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
+                <TextBox x:Name="nameMenuTextBox" Margin="65,30,5,5" Height="25" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
                     <TextBox.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -102,7 +113,7 @@
                         </Style>
                     </TextBox.Resources>
                 </TextBox>
-                <Button x:Name="getPathMenuButton" Height="20" Width="20" Content="..." Padding="-10" HorizontalAlignment="Right" Margin="0,0,3,0" FontSize="14">
+                <Button x:Name="getPathMenuButton" Height="20" Width="20" Content="..." Padding="-10" HorizontalAlignment="Right" Margin="0,0,3,0" FontSize="14" Click="getPathMenuButton_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="15"/>
@@ -112,7 +123,7 @@
             </Grid>
 
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
-                <Button x:Name="addMenuButton" Margin="0,0,20,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
+                <Button x:Name="addMenuButton" Margin="0,0,20,0" Style="{StaticResource buttonStyle}" Width="100" Height="25" Click="addMenuButton_Click">
                     <TextBlock Text="Добавить"/>
                 </Button>
                 <Button x:Name="clearMenuDataButton" Margin="20,0,0,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
