@@ -35,7 +35,7 @@ namespace ContextMenu
         private BitmapSource iconBitmapSource;
 
         // Путь до программы
-        private string pathToPrograms;
+        private string pathToPrograms = "";
 
         public MainWindow()
         {
@@ -103,16 +103,34 @@ namespace ContextMenu
             else
                 display = false;
 
-            // Добавление в данных пункта меню в коллекцию 
-            contextMenuCollection.Add(new RegistryData(
-                iconBitmapSource,
-                nameMenuTextBox.Text,
-                positionMenuComboBox.SelectedItem.ToString(),
-                (bool)displayCheckBox.IsChecked,
-                pathToPrograms
-            ));
+            // Проверяем все ли данные введены
+            if (nameMenuTextBox.Text.Length > 0 && pathToPrograms.Length > 0)
+            {
 
-            menuListBox.ItemsSource = contextMenuCollection;
+                RegistryData registryData = new RegistryData(
+                    iconBitmapSource,
+                    nameMenuTextBox.Text,
+                    positionMenuComboBox.SelectedIndex,
+                    (bool)displayCheckBox.IsChecked,
+                    pathToPrograms
+                );
+
+                if (contextMenuCollection.Where(element =>
+                    element.name == registryData.name).FirstOrDefault() == null
+                )
+                {
+                    // Добавление в данных пункта меню в коллекцию 
+                    contextMenuCollection.Add(registryData);
+                    menuListBox.ItemsSource = contextMenuCollection;
+
+                    // Обновляем отображение кол-ва элементов меню
+                    updateCountMenu();
+                }
+                else
+                    MessageBox.Show("'" + registryData.name + "' уже есть в списке. Измените 'Название пункта меню'", "Ошибка при добавлении пункта меню...", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+                MessageBox.Show("Введите 'Название пункта меню' и 'Путь к файлу'. Эти поля не должны быть пустыми!", "Ошибка при добавлении пункта меню...", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         // При загрузке формы
@@ -120,6 +138,19 @@ namespace ContextMenu
         {
             // Инициализация коллекции пунктов меню
             contextMenuCollection = new ObservableCollection<RegistryData>();
+        }
+
+        // Обновление данных о кол-ве элементов
+        private void updateCountMenu()
+        {
+            countMenuTextBlock.Text = contextMenuCollection.Count.ToString();
+        }
+
+        // При нажатии на кнопку Очистить
+        private void clearMenuDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            iconImage.Source = new BitmapImage(new Uri("Resources/commonIcon.png", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
+            nameMenuTextBox.Text = "";
         }
     }
 }

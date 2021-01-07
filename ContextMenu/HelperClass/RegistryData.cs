@@ -21,18 +21,43 @@ namespace ContextMenu.HelperClass
         public string position { get; set; }
 
         // Отображение (с sift'ом или без)
-        public bool dispaly { get; set; }
+        public string display { get; set; }
 
         // Путь до программы
         public string pathToPrograms { get; set; }
 
         // Конструктор
-        public RegistryData(BitmapSource icon, string name, string position, bool dispaly, string pathToPrograms)
+        public RegistryData(BitmapSource icon, string name, int position, bool display, string pathToPrograms)
         {
             this.icon = icon;
             this.name = name;
-            this.position = position;
-            this.dispaly = dispaly;
+
+            // Путь до картинки, для отображения позиции пункта меню
+            string positionPath = "Resources/";
+
+            switch (position)
+            {
+                case 0:
+                    positionPath += "top.png";
+                    break;
+                case 1:
+                    positionPath += "center.png";
+                    break;
+                case 2:
+                    positionPath += "bottom.png";
+                    break;
+            }
+
+            this.position = positionPath;
+
+            // Путь до картинки, для отображения пункта меню с shift'ом или без
+            string displayPath = "Resources/";
+            if (display) displayPath += "shift.png";
+            else
+                displayPath += "noShift.png";
+
+
+            this.display = displayPath;
             this.pathToPrograms = pathToPrograms;
         }
 

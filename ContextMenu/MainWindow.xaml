@@ -41,12 +41,12 @@
         </ToolBar>
         <Border Grid.Row="1" Grid.Column="0" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" CornerRadius="5" Margin="10">
             <Grid>
-                <ComboBox x:Name="typeContextComboBox" Margin="5" Height="25" VerticalAlignment="Top" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" Background="#FFF0C3C3">
+                <ComboBox x:Name="typeContextComboBox" Margin="5" Height="25" SelectedIndex="4" VerticalAlignment="Top" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2" Background="#FFF0C3C3">
                     <TextBlock Text="Контекстное меню файлов"/>
                     <TextBlock Text="Контекстное меню папок"/>
                     <TextBlock Text="Контекстное меню запоминающих устройств"/>
                     <TextBlock Text="Контекстное меню значка 'Компьютер'"/>
-                    <TextBlock Text="Контекстное меню Рабочего стола"/>
+                    <TextBlock Text="Контекстное меню 'Рабочего стола'"/>
                     <TextBlock Text="Контекстное меню значка 'Корзина'"/>
                 </ComboBox>
                 <ListBox x:Name="menuListBox" ItemsSource="{Binding contextMenuCollection}" Margin="-2,35,-2,-2" BorderBrush="{StaticResource ProgammColor}" BorderThickness="2">
@@ -72,9 +72,9 @@
                                 <TextBlock x:Name="pathMenuListBox" Text="{Binding pathToPrograms}" Grid.ColumnSpan="3"  Grid.Row="1" Margin="40,0,0,0" Foreground="#FF91929E"/>
                                 <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
                                     <Image x:Name="positionMenuListBoxImage" Source="{Binding position}"  Margin="5,0,5,0"/>
-                                    <Image x:Name="displayMenuListBoxImage" Source="{Binding dispaly}" Margin="5,0,0,0"/>
+                                    <Image x:Name="displayMenuListBoxImage" Source="{Binding display}" Margin="5,0,0,0"/>
                                 </StackPanel>
-                                
+
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -96,7 +96,7 @@
                 </TextBox>
             </Grid>
             <TextBlock Text="Позиция меню" Foreground="{StaticResource ProgammColor}" Margin="10,0,10,0" FontSize="14" FontWeight="Bold"/>
-            <ComboBox x:Name="positionMenuComboBox" Margin="10,5,10,0">
+            <ComboBox x:Name="positionMenuComboBox" Margin="10,5,10,0" SelectedIndex="1">
                 <TextBlock Text="Вверху"/>
                 <TextBlock Text="В центре"/>
                 <TextBlock Text="Внизу"/>
@@ -123,10 +123,13 @@
             </Grid>
 
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
-                <Button x:Name="addMenuButton" Margin="0,0,20,0" Style="{StaticResource buttonStyle}" Width="100" Height="25" Click="addMenuButton_Click">
+                <Button x:Name="addMenuButton" Margin="0,0,7,0" Style="{StaticResource buttonStyle}" Width="90" Height="25" Click="addMenuButton_Click">
                     <TextBlock Text="Добавить"/>
                 </Button>
-                <Button x:Name="clearMenuDataButton" Margin="20,0,0,0" Style="{StaticResource buttonStyle}" Width="100" Height="25">
+                <Button x:Name="delMenuButton" Margin="0,0,7,0" Style="{StaticResource buttonStyle}" Width="90" Height="25" Click="addMenuButton_Click">
+                    <TextBlock Text="Удалить"/>
+                </Button>
+                <Button x:Name="clearMenuDataButton" Margin="0,0,7,0" Style="{StaticResource buttonStyle}" Width="90" Height="25" Click="clearMenuDataButton_Click">
                     <TextBlock Text="Очистить"/>
                 </Button>
             </StackPanel>
@@ -137,7 +140,7 @@
 
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2" Background="#FF999090"  Height="20" VerticalAlignment="Bottom">
             <TextBlock Text="Кол-во пунктов меню:"/>
-            <TextBlock Text="5"/>
+            <TextBlock x:Name="countMenuTextBlock" Text="0"/>
         </StatusBar>
 
     </Grid>
