@@ -151,6 +151,9 @@ namespace ContextMenu
         {
             iconImage.Source = new BitmapImage(new Uri("Resources/commonIcon.png", UriKind.Relative)) { CreateOptions = BitmapCreateOptions.IgnoreImageCache };
             nameMenuTextBox.Text = "";
+            positionMenuComboBox.SelectedIndex = 1;
+            displayCheckBox.IsChecked = false;
+            pathMenuTextBox.Text = "";
         }
     }
 }
